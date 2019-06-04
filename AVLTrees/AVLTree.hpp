@@ -31,16 +31,35 @@ class AVLTree
 {
 private:
     AVLNode<T> *root;
-    const T elementAt(AVLNode<T>* &node);
-    const void insert(const T &x, AVLNode<T>* node);
-    const T findMax(AVLNode<T>* node);
-    const T findMin(AVLNode<T>* node);
-    const T find(const T &x, AVLNode<T>* node);
+    const T ITEM_NOT_FOUND;
+    const T elementAt(AVLNode<T>* node);
+    const void insert(const T &x, AVLNode<T>* &node);
+    const AVLNode<T>* findMax(AVLNode<T>* node);
+    const AVLNode<T>* findMin(AVLNode<T>* node);
+    const AVLNode<T>* find(const T &x, AVLNode<T>* node);
     const void makeEmpty(AVLNode<T> *node);
     const void printTree(AVLNode<T>* node);
+    const void printTreeDepth(AVLNode<T>* node, int depth);
+    int height(AVLNode<T>* Node);
+    const void LLRotation(AVLNode<T> *node);
+    const void LRRotation(AVLNode<T> *node);
+    const void RLRotation(AVLNode<T> *node);
+    const void RRRotation(AVLNode<T> *node);
+public:
+    AVLTree(const T &notFound);
+    const T & findMax();
+    const T & findMin();
+    const T & find(const T & x);
+    const bool isEmpty();
+    const void printTree();
+    const void printTreeDepth();
+    void makeEmpty();
+    void insert(const T &x);
+    void remove(const T &x);
     
     
 };
 
+#include "AVLTree.cpp"
 #endif /* AVLTree_hpp */
 
