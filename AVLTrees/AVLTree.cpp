@@ -102,7 +102,7 @@ const void AVLTree<T>::printTreeDepth()
  * Returns the element or ITEM_NOT_FOUND if node is nullptr.
  */
 template <class T>
-const T AVLTree<T>::elementAt(AVLNode<T> *node)
+const T AVLTree<T>::elementAt(const AVLNode<T> *node)
 {
     return node==nullptr? ITEM_NOT_FOUND: node->element;
 }
@@ -153,3 +153,154 @@ const void AVLTree<T>::insert(const T &x, AVLNode<T>* &node)
     node->height = std::max(height(node->lchild),height(node->rchild))+1;
 }
 
+
+/**
+ * Internal function to find the maximum item in a subtree with root node.
+ * Return node containing the largest item.
+ */
+template <class T>
+const AVLNode<T>* AVLTree<T>::findMax(AVLNode<T> *node)
+{
+    if(node==nullptr)
+        return node;
+    
+    while(node->rchild!=nullptr)
+    {
+        node = node->rchild;
+    }
+    return node;
+}
+
+
+/**
+ * Internal function to find the minimum item in a subtree with root node.
+ * Return node containing the smallest item.
+ */
+template <class T>
+const AVLNode<T> * AVLTree<T>::findMin(AVLNode<T> *node)
+{
+    if(node==nullptr)
+        return node;
+    
+    while(node->lchild!=nullptr)
+        node = node->lchild;
+    
+    return node;
+}
+
+/**
+* Internal function to find an element.
+* x is the element to be found.
+* node is the root of the tree.
+* Return node containing the element.
+*/
+template <class T>
+const AVLNode<T> * AVLTree<T>::find(const T &x, AVLNode<T> *node)
+{
+    if(node==nullptr)
+        return node;
+    
+    while(node!=nullptr)
+    {
+        if(x > node->element)
+            node = node->rchild;
+        else if (x == node->element)
+            break;
+        else
+            node = node->lchild;
+    }
+    
+    return node;
+}
+
+/**
+ * I
+ */
+template <class T>
+const void AVLTree<T>::printTree(AVLNode<T> *node)
+{
+    if (node!=nullptr)
+    {
+        printTree(node->lchild);
+        std::cout << node->element << std::endl;
+        printTree(node->rchild);
+    }
+}
+
+/**
+ * Internal function to print a subtree, indicating the depth.
+ */
+template <class T>
+const void AVLTree<T>::printTreeDepth(AVLNode<T> *node, int depth)
+{
+    if (node!=nullptr)
+    {
+        printTreeDepth(node->rchild, depth+1);
+        for(int i = 0; i < depth ; ++i)
+        {
+            std::cout << " ";
+        }
+        std::cout << node->element << std::endl;
+        printTreeDepth(node->lchild, depth+1);
+    }
+}
+
+/**
+ * Internal function to perform LL Rotation.
+ */
+template <class T>
+const void AVLTree<T>::LLRotation(AVLNode<T>* &node)
+{
+    AVLNode<T> *nodeLChild = node->lchild;
+    node->lchild = nodeLChild->rchild;
+    nodeLChild->rchild = node;
+    node->height = std::max(height(node->lchild),height(node->rchild))+1;
+    nodeLChild->height = std::max(height(nodeLChild->lchild), height(nodeLChild->rchild))+1;
+    node = nodeLChild;
+    
+}
+
+/**
+ * Internal function to perform RR Rotation.
+ */
+template <class T>
+const void AVLTree<T>::RRRotation(AVLNode<T>* &node)
+{
+    AVLNode<T> *nodeRChild = node->rchild;
+    node->rchild = nodeRChild->lchild;
+    nodeRChild->lchild = node;
+    node->height = std::max(height(node->lchild),height(node->rchild))+1;
+    nodeRChild->height = std::max(height(nodeRChild->lchild), height(nodeRChild->rchild))+1;
+    node = nodeRChild;
+
+}
+/**
+ * Internal function to perform RL Rotation.
+ */
+
+template <class T>
+const void AVLTree<T>::RLRotation(AVLNode<T>* &node)
+{
+    RRRotation(node->lchild);
+    LLRotation(node);
+}
+
+/**
+ * Internal function to perform LR Rotation.
+ */
+template <class T>
+const void AVLTree<T>::LRRotation(AVLNode<T>* &node)
+{
+    LLRotation(node->rchild);
+    RRRotation(node);
+}
+
+/**
+ * Internal function to return the height of the tree.
+ * Returns -1 if node is nullptr or else the height.
+ */
+template <class T>
+int AVLTree<T>::height(AVLNode<T> *node)
+{
+    return node==nullptr? -1 : node->height;
+}

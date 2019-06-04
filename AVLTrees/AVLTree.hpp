@@ -32,7 +32,7 @@ class AVLTree
 private:
     AVLNode<T> *root;
     const T ITEM_NOT_FOUND;
-    const T elementAt(AVLNode<T>* node);
+    const T elementAt(const AVLNode<T>* node);
     const void insert(const T &x, AVLNode<T>* &node);
     const AVLNode<T>* findMax(AVLNode<T>* node);
     const AVLNode<T>* findMin(AVLNode<T>* node);
@@ -41,10 +41,10 @@ private:
     const void printTree(AVLNode<T>* node);
     const void printTreeDepth(AVLNode<T>* node, int depth);
     int height(AVLNode<T>* Node);
-    const void LLRotation(AVLNode<T> *node);
-    const void LRRotation(AVLNode<T> *node);
-    const void RLRotation(AVLNode<T> *node);
-    const void RRRotation(AVLNode<T> *node);
+    const void LLRotation(AVLNode<T>* &node);
+    const void LRRotation(AVLNode<T>* &node);
+    const void RLRotation(AVLNode<T>* &node);
+    const void RRRotation(AVLNode<T>* &node);
 public:
     AVLTree(const T &notFound);
     const T & findMax();
@@ -60,6 +60,5 @@ public:
     
 };
 
-#include "AVLTree.cpp"
 #endif /* AVLTree_hpp */
 

@@ -6,10 +6,19 @@
 //  Copyright © 2019 Udit Samani. All rights reserved.
 //
 
-#include <iostream>
+#include "AVLTree.cpp"
+#include <string>
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    const std::string ITEM_NOT_FOUND = "";
+    AVLTree<std::string> tree(ITEM_NOT_FOUND);
+    tree.insert("a");
+    tree.insert("b");
+    tree.insert("c");
+    //tree.insert("d");
+    //tree.insert("e");
+    //tree.insert("f");
+    tree.printTreeDepth();
+   // std::cout << tree.find(6) <<std::endl;
 }
